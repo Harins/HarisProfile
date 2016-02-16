@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>DB Login Page</title>
+    </head>
+    <body>
+        <%  if(request.getParameter("user") == null)  { %>
+            <form method = "post">
+                <h2> Admin Login </h2>
+                <p>Username&nbsp;&nbsp;&nbsp;<input type="text" name="user" /></p>
+                <p>Password&nbsp;&nbsp;&nbsp;<input type="password" name="pwd" /></p>
+                <p><input type="submit" value="Connect to MySQL Database" /></p>
+            </form>
+        <%  } else {  %>
+            <jsp:useBean id="cb" class="com.haris.DB.DBConnectBean" scope="session" />
+            <jsp:setProperty name="cb" property="*" />
+            <% if(cb.connect()) { %>
+                <hr/>Congratulation!!! &nbsp;&nbsp;&nbsp;    MySQL Database Connection has established...<br><br>
+                Select the Database Operations::<br><br>
+                <a href="DBInsertQuery.jsp">Enter a SQL INSERT</a><br>
+                <a href="DBSelectQuery.jsp">Enter a SQL SELECT</a><br>
+                <a href="DBUpdateQuery.jsp">Enter a SQL UPDATE</a><br>
+                <a href="DBDeleteQuery.jsp">Enter a SQL DELETE</a><br>
+                <a href="DBCloseQuery.jsp">Close the Transaction</a>
+            <% } else { %>
+                <hr/>Connection not established...
+                <a href="DBLogin.jsp">Retry to connect</a>
+            <% } %>
+        <%  }  %>
+    </body>
+</html>

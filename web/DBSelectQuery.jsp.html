@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>DB Query Page</title>
+    </head>
+    <body>
+        <%  if(request.getParameter("query") == null)  { %>
+            <form method = "post">
+                <p>SQL SELECT<input type="text" name="query" /></p> ("Click to show all the events Record")
+                <p><input type="submit" value="Run Against MySQL Database" /></p>
+            </form>
+
+        <%  } else {  %>
+            <jsp:useBean id="cb" class="com.haris.DB.DBConnectBean" scope="session" />
+            <jsp:useBean id="qb" class="com.haris.DB.DBSelectBean" scope="session" />
+            <% qb.setConn(cb.getConn()); %>
+            <jsp:setProperty name="qb" property="*" />
+            <jsp:getProperty name="qb" property="result" />
+            <a href="<%= request.getRequestURI() %>">Enter another SQL SELECT</a>           
+        <%  }  %>
+        <p>OR Select the Database Operations::</p><br>
+                <a href="DBInsertQuery.jsp">Enter a SQL INSERT</a><br>
+                <a href="DBSelectQuery.jsp">Enter a SQL SELECT</a><br>
+                <a href="DBUpdateQuery.jsp">Enter a SQL UPDATE</a><br>
+                <a href="DBDeleteQuery.jsp">Enter a SQL DELETE</a><br>
+                <a href="DBCloseQuery.jsp">Close the Transaction</a>
+    </body>
+</html>
